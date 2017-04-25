@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+
+<!--<div th:replace="fragments :: page-header"></div>
+-->
+<div class="container body-content">
+
+    <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+
+    <div th:unless="${categories} and ${categories.size()}">
+        <h2>No Results</h2>
+    </div>
+
+
+    <div th:fragment="categories-list">
+        <div th:if="${categories} and ${categories.size()}">
+
+            <h3 th:text="${categories.size() + ' Result(s)'}"></h3>
+            <br>
+
+            <ul>
+                <li th:each="category : ${categories}" th:text="${category.name}"> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
