@@ -1,32 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head">
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
 
-<!--<div th:replace="fragments :: page-header"></div>
--->
-<div class="container body-content">
+<body class="container">
 
-    <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+<h1 th:text="${title}">Default Title</h1>
 
-    <div th:unless="${categories} and ${categories.size()}">
+<!-- ref cheese/index.html for use of fragments.html-->
+<!-- ref techjobsoo for list-->
+
+    <p th:unless="${categories} and ${categories.size()}">
         <h2>No Results</h2>
-    </div>
+    </p>
 
 
-    <div th:fragment="categories-list">
-        <div th:if="${categories} and ${categories.size()}">
+<div th:fragment="categories-list">
+    <div th:if="${categories} and ${categories.size()}">
 
-            <h3 th:text="${categories.size() + ' Result(s)'}"></h3>
-            <br>
+        <!--<h3 th:text="${categories.size() + ' Result(s)'}"></h3>-->
 
-            <ul>
-                <li th:each="category : ${categories}" th:text="${category.name}"> </li>
-            </ul>
-        </div>
+
+        <ul>
+            <li th:each="category : ${categories}" th:text="${category.name}"> </li>
+        </ul>
     </div>
 </div>
+
+<nav th:fragment="navigation">
+    <a href="/category/add">Add Category</a> |
+
+</nav>
 
 </body>
 </html>
