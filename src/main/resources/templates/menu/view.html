@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<!-- modeling after menu/index.html + job-detail in TechJobOO -->
+
+<div th:fragment="single-menu" class="menu-listing">
+    <ul>
+        <li th:text="${menu.name}" th:each="menu : ${menus}"></li>
+    </ul>
+</div>
+
+<nav th:fragment="navigation">
+    <p> <a th:href="'/menu/add-item' + ${menu.id}">Add Menu </a> </p>
+
+</nav>
+
+</body>
+</html>
