@@ -3,6 +3,7 @@ package org.launchcode.controllers;
 import org.launchcode.models.Menu;
 import org.launchcode.models.data.MenuDao;
 import org.launchcode.models.data.CheeseDao;
+import org.launchcode.models.forms.AddMenuItemForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,7 +76,16 @@ public class MenuController {
 
         Menu menu = menuDao.findOne(id);
 
-        
+        //STEP BREAK//
+
+        AddMenuItemForm itemForm = new AddMenuItemForm(cheeseDao.findAll(),menu);
+
+        model.addAttribute("form", itemForm);
+
+        model.addAttribute("title", "Add item to menu: "+ menu.getName());
+
+        return "menu/add-item";
+
     }
 
 }
