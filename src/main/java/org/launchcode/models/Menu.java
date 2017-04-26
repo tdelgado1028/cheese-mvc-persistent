@@ -44,6 +44,10 @@ public class Menu {
         this.name = name;
     }
 
+    public List<Cheese> getCheeses() {
+        return cheeses;
+    }
+
     public void addItem(Cheese item){
         cheeses.add(item);
     }
