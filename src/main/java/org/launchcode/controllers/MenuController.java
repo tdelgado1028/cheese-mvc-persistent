@@ -1,5 +1,6 @@
 package org.launchcode.controllers;
 
+import org.launchcode.models.Cheese;
 import org.launchcode.models.Menu;
 import org.launchcode.models.data.MenuDao;
 import org.launchcode.models.data.CheeseDao;
@@ -42,6 +43,7 @@ public class MenuController {
     public String displayAddMenu(Model model) {
         model.addAttribute("title", "Add New Menu");
         model.addAttribute(new Menu());
+        model.addAttribute("categories", menuDao.findAll());
         return "menu/add";
     }
 
@@ -50,8 +52,7 @@ public class MenuController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add New Menu");
-            model.addAttribute(new Menu());
-            model.addAttribute(errors); //*??
+            model.addAttribute("categories", menuDao.findAll());
             return "menu/add";
         }
 
@@ -85,7 +86,40 @@ public class MenuController {
         model.addAttribute("title", "Add item to menu: "+ menu.getName());
 
         return "menu/add-item";
-
     }
 
+    //add another addItem handler to accept POST requests -- model from CategoryController's POST add
+    @RequestMapping(value="add-item/{id}", method = RequestMethod.POST)
+    public String addItem(Model model,
+                          @ModelAttribute @Valid AddMenuItemForm menuItemForm,
+                          @PathVariable(value = "id") int id,
+                          Errors errors) {
+
+        //check for errors- return if true -- modelled after addItem GET
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Item to menu: " + menuDao.findOne(menuItemForm.getMenuId()));
+            model.addAttribute("form", menuItemForm);
+            model.addAttribute("categories", menuDao.findAll());
+            return "menu/add-item";
+        }
+
+        //error free = save new menu -- menuDao.save(theMenu), redirect to VIEW of menu URL
+        else {
+
+            //find given cheese & menu by ID using cheeseDao & menuDao
+            //so we know what menu to save
+            //so we know what to set the cheese in menu's objects for ManyToMany
+            Menu theMenu = menuDao.findOne(menuItemForm.getMenuId());
+            Cheese theCheese = cheeseDao.findOne(menuItemForm.getCheeseId());
+
+            //implementing ManyToMany relationship of cheeses in Menu.java
+            theMenu.addItem(theCheese);
+
+            //save new menu
+            menuDao.save(theMenu);
+
+            //redirect to VIEW of new menu
+            return "redirect:../view/" + theMenu.getId();
+        }
+    }
 }
