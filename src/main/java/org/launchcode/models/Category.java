@@ -18,12 +18,13 @@ public class Category {
     private int id;
 
     @NotNull
-    @Size(min=3, max=15)
+    @Size(min=3, max=15, message = "Name must be between 3 and 15 characters")
     private String name;
 
     @OneToMany
     @JoinColumn(name = "category_id")
     private List<Cheese> cheeses = new ArrayList<>();
+
     public Category(){}
 
     public Category(String name){

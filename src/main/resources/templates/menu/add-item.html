@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<!-- have modeled after menu/add.html -->
+<!-- also taking cues from cheese/add.html Type input-->
+
+<!-- form attribute, using th:object to bind to <form> -->
+<form method="post" style="max-width:600px;" th:object="${form}">
+
+    <!-- keeping from modeling menu/add.html -->
+    <div class="form-group">
+
+        <!-- <label> tag outside <select> tag cue from cheese/add.html -->
+        <label th:for="cheeseId">Cheese</label>
+
+<!--    <select> element that contains all of the cheeses. The name of this input should be cheeseId,
+        and the value attribute of each <option> should be the id of the given cheese.
+
+        Be sure to use th:for, th:field, and th:errors
+        in creating the label, input, and span elements.
+        </select>-->
+
+        <select name="cheeseId">
+            <option th:each="cheese : ${form.cheeses}"
+                    th:text="${cheese.name}"
+                    th:value="${cheese.id}">
+            </option>
+        </select>
+
+        <!-- <span> tag cues from menu/add.html -->
+        <span th:errors="*{menu}" class="error"></span>
+    </div>
+
+    <input type = "hidden" name="menuId" th:value="*{menu.id}" />
+
+    <input type="submit" value="Add to Menu" />
+</form>
+
+</body>
+</html>

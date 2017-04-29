@@ -27,7 +27,7 @@ public class AddMenuItemForm {
     //default no-arg
     public AddMenuItemForm(){}
 
-    //accept/set values for menu and cheeses -- rendering fields
+    //accept/set values for menu and cheeses -- rendering fields **order of field listing in declaration v.important
     public AddMenuItemForm(Iterable<Cheese> cheeses, Menu menu){
         this.cheeses = cheeses;
         this.menu = menu;

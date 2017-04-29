@@ -92,7 +92,7 @@ public class MenuController {
     @RequestMapping(value="add-item/{id}", method = RequestMethod.POST)
     public String addItem(Model model,
                           @ModelAttribute @Valid AddMenuItemForm menuItemForm,
-                          @PathVariable(value = "id") int id,
+                         // @PathVariable(value = "id") int id,
                           Errors errors) {
 
         //check for errors- return if true -- modelled after addItem GET
